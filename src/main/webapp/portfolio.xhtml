@@ -1,0 +1,79 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<div class="card">
+						<h1>Precisamos Conhecer um pouco sobre você</h1>
+						<p>Qual dos perfis abaixo está mais alinhado com seu propósito neste momento</p>
+
+
+						<p:carousel value="#{portBean.perfis}" var="perfil" numVisible="3" numScroll="3">
+							<f:facet name="header">
+								<h5>Perfis de Investimento</h5>
+							</f:facet>
+							<div class="product-item-content">
+								<div class="mb-3">
+									<p:graphicImage name="demo/images/#{perfil.id}.jpg" styleClass="product-image" />
+								</div>
+								<div>
+									<h3 class="mb-1">#{perfil.nome}</h3>
+									<h4 class="mb-1">#{perfil.descricao}</h4>
+								</div>
+							</div>
+
+							<p:commandButton value="Esse parece comigo" style="display:inline-block;margin-top:5px"
+								actionListener="#{portBean.escolherPerfil(perfil)}" update="@form" />
+						</p:carousel>
+
+						<p:dataTable id="table" value="#{portBean.fundos}" var="f">
+
+							<p:column headerText="Nome do Fundo" colspan="2">
+								<h:outputLabel value="#{f.nome}" />
+							</p:column>
+
+
+							<p:column headerText="Aberto Desde">
+								<h:outputLabel value="#{f.dataAbertura}">
+									<f:convertDateTime pattern="dd/MM/yyyy" locale="pt" />
+								</h:outputLabel>
+							</p:column>
+
+							<p:column headerText="Risco">
+								<h:outputLabel value="#{f.risco.nome}" />
+							</p:column>
+
+							<p:column headerText="Rentabilidade 30 dias">
+								<h:outputLabel value="#{f.rentabilidade.d30}">
+									<f:convertNumber maxFractionDigits="2" type="percent" />
+								</h:outputLabel>
+							</p:column>
+
+							<p:column headerText="Rentabilidade 90 dias">
+								<h:outputLabel value="#{f.rentabilidade.d90}">
+									<f:convertNumber maxFractionDigits="2" type="percent" />
+								</h:outputLabel>
+							</p:column>
+
+							<p:column headerText="Rentabilidade 6 Meses">
+								<h:outputLabel value="#{f.rentabilidade.d180}">
+									<f:convertNumber maxFractionDigits="2" type="percent" />
+								</h:outputLabel>
+							</p:column>
+
+							<p:column headerText="Rentabilidade 12 Meses">
+								<h:outputLabel value="#{f.rentabilidade.d360}">
+									<f:convertNumber maxFractionDigits="2" type="percent" />
+								</h:outputLabel>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
